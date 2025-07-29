@@ -45,6 +45,8 @@ def validate_record(record, headers) -> Tuple[bool, str, str]:
         date_data_str = record['成功']
     elif '日期' in headers:
         date_data_str = record['日期']
+    elif '随访日期' in headers:
+        date_data_str = record['随访日期']
     else:
         logging.critical(f'{sfzh} - 在表头中未找到 "成功" 或 "日期" 列')
         return False, None, None
