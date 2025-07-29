@@ -10,7 +10,7 @@ from kapybara.shared_data import shared_data
 from kapybara import WebDriver
 
 
-def get_async_xhr(id_number) -> int:
+def get_async_xhr(id_number, org_code: str) -> int:
     """
     对应界面中输入身份证号并进行查询的 JavaScript 代码
 
@@ -35,7 +35,7 @@ def get_async_xhr(id_number) -> int:
             'EQ_idNumber': str(id_number),
             'LIKE_ehrCode': '%',
             # 'EQ_mngOrgCode': '0626',   # 对应界面中未选择“包含子机构”
-            'LIKE_mngOrgCode': '0626%',  # 对应界面中选择“包含子机构”
+            'LIKE_mngOrgCode': f'{org_code}%',  # 对应界面中选择“包含子机构”
             'LIKE_nameIndex': '%',
             'EQ_grChronicDisease': '1',
         },
