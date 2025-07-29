@@ -457,11 +457,11 @@ wheels = [
 
 [[package]]
 name = "phis-config"
-version = "2025.7.29.2"
+version = "2025.7.29.3"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/b0/9d/0dd654aba5761a8041f49ccba967b65cac43ffd0c14a50d2f36a04f4ec2d/phis_config-2025.7.29.2.tar.gz", hash = "sha256:e661ec919f1df466f22e60c13f90a3569498226d0fa738f0c75208a81fc1bdc4", size = 17805, upload-time = "2025-07-29T01:37:58.786Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/f4/12/105de7418eaa338844cc3acd604f8244f2733de892a5aa6acdef827f9c37/phis_config-2025.7.29.3.tar.gz", hash = "sha256:d849ce56df1a370860ec6a9b288c2ccafb24f2b4a14db6c00c8567f6f226bf4e", size = 17835, upload-time = "2025-07-29T08:19:18.09Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/9f/b4/983b81c873af7f1321b2dc51b15de54b102f66673f11c91755d7147fa789/phis_config-2025.7.29.2-py3-none-any.whl", hash = "sha256:19e28af410f961c67bf3a625b2de37550ad8ad38122c104d105df17ea83ad6e8", size = 17747, upload-time = "2025-07-29T01:37:57.877Z" },
+    { url = "https://files.pythonhosted.org/packages/5c/8c/6b63ed80268cfeecb9c8b8dca6f29602cde6f428f2bce3b0eaa43a49b163/phis_config-2025.7.29.3-py3-none-any.whl", hash = "sha256:90b7bf1fd0323b82f242edb02b75bf4bb4b7a2779187add4040b0e592f985619", size = 17784, upload-time = "2025-07-29T08:19:16.899Z" },
 ]
 
 [[package]]
@@ -478,7 +478,7 @@ wheels = [
 
 [[package]]
 name = "phis-login"
-version = "2025.7.29.0"
+version = "2025.7.29.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ddddocr" },
@@ -487,9 +487,9 @@ dependencies = [
     { name = "pyyaml" },
     { name = "soda-kapybara" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a2/fd/a2f9cb009cf222427d008656196838651d31b6a4e5ea81b676541fa22d4e/phis_login-2025.7.29.0.tar.gz", hash = "sha256:69eea7c823ccf254bf5204ccc4d957dfe1bcfdf09676aa0329e6418c26e50945", size = 18150, upload-time = "2025-07-29T06:10:30.637Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/f0/99/560ae70ad5bda21424918ef68859d9fed05223a5cb702c299393ca7fb12d/phis_login-2025.7.29.1.tar.gz", hash = "sha256:1d61ab184cbaef97f99a97f125829426abd38ae304edcae0436d067778ccf09f", size = 18153, upload-time = "2025-07-29T08:20:18.486Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/9b/cf/41e613687f114b13f40cb8a63aa37d034fe30800afc88d892136f9e39e9c/phis_login-2025.7.29.0-py3-none-any.whl", hash = "sha256:4a7640b74b34f77ab5d9c2a0a5552caa0a0d51f519017b3eeeb72e2b8d9eaf41", size = 18558, upload-time = "2025-07-29T06:10:29.375Z" },
+    { url = "https://files.pythonhosted.org/packages/ce/09/1d690275c34c3128f929f8321e2c7c7f64cf7d66485a5ee0b4577d88039c/phis_login-2025.7.29.1-py3-none-any.whl", hash = "sha256:d523f737256c0cbd2fa70d9f251b5bf2000b10481b15b26e4055520faf5fab1e", size = 18557, upload-time = "2025-07-29T08:20:17.238Z" },
 ]
 
 [[package]]
@@ -1006,10 +1006,11 @@ wheels = [
 
 [[package]]
 name = "yxmb-compat-engine"
-version = "2025.7.29.2"
+version = "2025.7.29.6"
 source = { editable = "." }
 dependencies = [
     { name = "phis-build" },
+    { name = "phis-config" },
     { name = "phis-logging" },
     { name = "phis-login" },
     { name = "soda-kapybara" },
@@ -1018,7 +1019,8 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "phis-build", specifier = ">=2025.7.21.7" },
+    { name = "phis-config", specifier = ">=2025.7.29.3" },
     { name = "phis-logging", specifier = ">=2025.7.29.3" },
-    { name = "phis-login", specifier = ">=2025.7.29.0" },
+    { name = "phis-login", specifier = ">=2025.7.29.1" },
     { name = "soda-kapybara", specifier = ">=2025.7.17.7" },
 ]
