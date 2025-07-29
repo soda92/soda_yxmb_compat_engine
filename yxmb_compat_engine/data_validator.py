@@ -4,6 +4,7 @@ import numpy as np
 from .chinese_id_check import is_valid_chinese_id
 from kapybara.common.write_excel import excel_append
 from typing import Tuple
+import pandas as pd
 
 
 def validate_record(record, headers) -> Tuple[bool, str, str]:
@@ -40,19 +41,29 @@ def validate_record(record, headers) -> Tuple[bool, str, str]:
     sfzh = id_number.replace('x', 'X').strip()
 
     # 验证并提取日期
-    date_data_str = ''
+    date_value = None
     if '成功' in headers:
-        date_data_str = record['成功']
+        date_value = record['成功']
     elif '日期' in headers:
-        date_data_str = record['日期']
+        date_value = record['日期']
     elif '随访日期' in headers:
-        date_data_str = record['随访日期']
+        date_value = record['随访日期']
     else:
-        logging.critical(f'{sfzh} - 在表头中未找到 "成功" 或 "日期" 列')
+        logging.critical(f'{sfzh} - 在表头中未找到 "成功" 或 "日期" 或 "随访日期" 列')
         return False, None, None
 
-    # 确保 date_data_str 是字符串类型以进行正则匹配
-    date_data_str = str(date_data_str)
+    date_data_str = ''
+    if isinstance(date_value, (int, float)) and not np.isnan(date_value):
+        # Handle Excel date serial number
+        try:
+            # Excel for Windows epoch is 1899-12-30
+            date_data_str = pd.to_datetime(date_value, unit='D', origin='1899-12-30').strftime('%Y-%m-%d')
+        except (ValueError, TypeError):
+            pass  # Will be handled by regex check later
+    
+    if not date_data_str:
+        date_data_str = str(date_value)
+
     date_match = re.findall(r'\d{4}-\d{2}-\d{2}', date_data_str)
     if not date_match:
         excel_append(
