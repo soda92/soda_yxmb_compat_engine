@@ -7,7 +7,7 @@ requires-python = ">=3.12"
 dependencies = [
     "phis-build>=2025.7.21.7",
     "phis-logging>=2025.7.29.3",
-    "phis-login>=2025.7.21.5",
+    "phis-login>=2025.7.29.0",
     "soda-kapybara>=2025.7.17.7",
 ]
 
