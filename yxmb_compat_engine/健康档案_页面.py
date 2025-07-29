@@ -13,7 +13,7 @@ def get_root_url() -> str:
     parsed_url = urlparse(url)
     return f"{parsed_url.scheme}://{parsed_url.netloc}"
 
-def 搜索并打开病人页面(driver: WebDriver, id_number: str):
+def 搜索并打开病人页面(driver: WebDriver, id_number: str, menuId: str):
     """
     根据身份证号查询并打开个人首页
     """
@@ -38,7 +38,7 @@ def 搜索并打开病人页面(driver: WebDriver, id_number: str):
             )
             return
 
-    target_url = f'{get_root_url()}/phis/app/ehr/index/{patient_id}?targetMenuId=menu_5_1'
+    target_url = f'{get_root_url()}/phis/app/ehr/index/{patient_id}?targetMenuId={menuId}'
     original_window = driver.current_window_handle
 
     driver.switch_to.new_window('tab')
