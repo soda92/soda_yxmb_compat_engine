@@ -5,7 +5,6 @@ description = "宇信慢病兼容版引擎"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "phis-build>=2025.7.21.7",
     "phis-logging>=2025.7.29.3",
     "phis-login>=2025.7.29.1",
     "phis-config>=2025.7.29.3",
