@@ -2,30 +2,25 @@ import logging
 import re
 import numpy as np
 from .chinese_id_check import is_valid_chinese_id
-from kapybara.common.write_excel import excel_append
 from typing import Tuple, Optional
 import pandas as pd
+from .result_writer import ResultWriter # 确保导入
+
+# 不再需要 excel_append
+# from kapybara.common.write_excel import excel_append
 
 
-def validate_record(record: dict, headers: list, config: dict) -> Tuple[bool, Optional[str], Optional[str]]:
+def validate_record(record: dict, headers: list, config: dict, writer: ResultWriter) -> Tuple[bool, Optional[str], Optional[str]]:
     """
     验证单个记录。
-
-    Args:
-        record (dict): 一条数据记录。
-        headers (list): 表头列表。
-        config (dict): 从 toml 文件加载的配置。
-
-    Returns:
-        验证结果，身份证号，日期。
     """
-    # 检查身份证号是否为空或NaN
+    # ... (前面的空值检查不变) ...
     if isinstance(record["身份证号"], float) and np.isnan(record["身份证号"]):
         return False, None, None
     if isinstance(record["身份证号"], str) and record["身份证号"].strip() == "":
         return False, None, None
 
-    # 从配置中获取验证规则
+    # ... (获取验证配置不变) ...
     validation_config = config.get("validation", {})
     strict_id_check = validation_config.get("strict_id_check", True)
 
@@ -34,19 +29,13 @@ def validate_record(record: dict, headers: list, config: dict) -> Tuple[bool, Op
     if strict_id_check:
         verified, message = is_valid_chinese_id(id_number)
         if not verified:
-            logging.error(f"身份证号 {id_number} 无效: {message}")
-            excel_append(
-                "执行结果/异常名单.xlsx",
-                "身份证号",
-                id_number + "\t",
-                "异常原因",
-                message,
-            )
+            # 使用 writer 记录错误
+            writer.log_failure(id_number, f"身份证号无效: {message}")
             return False, None, None
 
     sfzh = id_number.replace("x", "X").strip()
 
-    # 根据配置的列名顺序查找日期
+    # ... (日期查找逻辑不变) ...
     date_columns_priority = validation_config.get("date_columns", ["随访日期", "成功", "日期"])
     date_value = None
     found_column = None
@@ -58,9 +47,11 @@ def validate_record(record: dict, headers: list, config: dict) -> Tuple[bool, Op
     
     if found_column is None:
         logging.critical(f'{sfzh} - 在表头中未找到任何指定的日期列: {date_columns_priority}')
+        # 这种严重错误可能需要特殊处理，但也可以用writer记录
+        writer.log_failure(sfzh, f"未找到日期列: {date_columns_priority}")
         return False, None, None
 
-    # ... (日期解析逻辑保持不变) ...
+    # ... (日期解析逻辑不变) ...
     date_data_str = ""
     if isinstance(date_value, (int, float)) and not np.isnan(date_value):
         try:
@@ -75,14 +66,10 @@ def validate_record(record: dict, headers: list, config: dict) -> Tuple[bool, Op
 
     date_match = re.findall(r"\d{4}-\d{2}-\d{2}", date_data_str)
     if not date_match:
-        excel_append(
-            "执行结果/异常名单.xlsx",
-            "身份证号",
-            sfzh + "\t",
-            "异常原因",
-            f"在列 '{found_column}' 中找到的日期格式不正确",
-        )
-        logging.critical(f"{sfzh} - 在列 '{found_column}' 中找到的日期格式不正确: {date_data_str}")
+        # 使用 writer 记录错误
+        reason = f"在列 '{found_column}' 中找到的日期格式不正确: {date_data_str}"
+        writer.log_failure(sfzh, reason)
+        logging.critical(f"{sfzh} - {reason}")
         return False, None, None
 
     return True, sfzh, date_match[0]

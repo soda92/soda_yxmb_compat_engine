@@ -11,11 +11,12 @@ import logging
 from kapybara.common.envWrite import env_write
 from phis_config import ProgramConfigV2
 
-from .运行时数据 import 已完成数量
+# 不再需要从这里导入已完成数量
+# from .运行时数据 import 已完成数量
 
 
-def 获取剩余数据() -> dict:
-    已完成数量.value = int(ProgramConfigV2.get_completed_count())
+def 获取剩余数据() -> tuple:
+    completed_count = int(ProgramConfigV2.get_completed_count())
 
     df_full = pd.read_excel('文档/名单.xlsx', engine='openpyxl',  dtype={'身份证号': str})
     data1 = df_full.to_dict('records')
@@ -26,5 +27,5 @@ def 获取剩余数据() -> dict:
 
     env_write('执行结果/env.txt', 1, f'总操作数:{max_number}')
 
-    data_remaining = df_full.iloc[int(已完成数量) :].to_dict('records')
-    return data_remaining, headers
+    data_remaining = df_full.iloc[completed_count:].to_dict('records')
+    return data_remaining, headers, completed_count
