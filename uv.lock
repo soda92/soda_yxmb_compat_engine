@@ -834,7 +834,7 @@ wheels = [
 
 [[package]]
 name = "soda-kapybara"
-version = "2025.7.30.1"
+version = "2025.7.30.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cryptography" },
@@ -848,9 +848,9 @@ dependencies = [
     { name = "selenium" },
     { name = "yxmb-compatlib" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/50/4d/3e13bff41f75e54c9155457c469f0224ae766088659dd5f9ea3bb7a2411c/soda_kapybara-2025.7.30.1.tar.gz", hash = "sha256:21e7dfdbb745440f17aab9b4c508692d548b56a131dacd37922e560f70379dd8", size = 10175, upload-time = "2025-07-30T07:32:16.219Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/65/dd/2dd82539562fa4e49cf5bb490ce954ccd1de047611183c9b6c3bf8606c1a/soda_kapybara-2025.7.30.2.tar.gz", hash = "sha256:c876f6e2757dfb70ae1745e8e621708501bf085be38679a883e686a6a34fe887", size = 10269, upload-time = "2025-07-30T08:44:29.827Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a5/23/18e8d3e31d797f6ea17ea851f5d3c92c571d712a10e1c39d9b1c56913d56/soda_kapybara-2025.7.30.1-py3-none-any.whl", hash = "sha256:5999f6f075f4251aaff135552b35583636151f7b3906720761068ae0ab0b024d", size = 12253, upload-time = "2025-07-30T07:32:15.013Z" },
+    { url = "https://files.pythonhosted.org/packages/64/25/28507a5c41bcdab75111de8834a0a56ce2c9b1ada2b98223be81ab36cf62/soda_kapybara-2025.7.30.2-py3-none-any.whl", hash = "sha256:0b72ce20b061b19db6860d08f2b4a6fb1a3726fd997ad52a8ef5c368c5b3e42c", size = 12821, upload-time = "2025-07-30T08:44:28.577Z" },
 ]
 
 [[package]]
@@ -987,7 +987,7 @@ requires-dist = [
     { name = "phis-config", specifier = ">=2025.7.29.3" },
     { name = "phis-logging", specifier = ">=2025.7.29.3" },
     { name = "phis-login", specifier = ">=2025.7.29.1" },
-    { name = "soda-kapybara", specifier = ">=2025.7.17.7" },
+    { name = "soda-kapybara", specifier = ">=2025.7.30.2" },
     { name = "yxmb-compatlib", specifier = ">=2025.7.30.6" },
 ]
 

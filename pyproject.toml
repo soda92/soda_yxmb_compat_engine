@@ -8,7 +8,7 @@ dependencies = [
     "phis-logging>=2025.7.29.3",
     "phis-login>=2025.7.29.1",
     "phis-config>=2025.7.29.3",
-    "soda-kapybara>=2025.7.17.7",
+    "soda-kapybara>=2025.7.30.2",
     "yxmb-compatlib>=2025.7.30.6",
 ]
 
