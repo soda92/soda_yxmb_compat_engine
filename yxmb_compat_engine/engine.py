@@ -1,8 +1,10 @@
 import logging
-from kapybara.browserlib.custom_browser import CustomBrowser
+# --- 替换为 yxmb_compatlib 的组件 ---
+from yxmb_compatlib import CustomBrowser, login
+from yxmb_compatlib.config import load_config
+# --- 引擎自身的组件 ---
 from .setup import setup_excel_file
 from phis_logging import setup_logging
-from phis_login import 登录健康档案系统
 from .main_数据 import 获取剩余数据
 from .data_validator import validate_record
 
@@ -10,40 +12,53 @@ from .data_validator import validate_record
 def run(patient_func):
     setup_logging()
 
-    # if is_software_expired():
+    # 1. 使用 yxmb_compatlib 加载配置
+    config = load_config()
+
+    # (可选) 使用配置中的过期日期检查
+    # from yxmb_compatlib.comment.登录头 import is_software_expired
+    # if is_software_expired(config):
     #     logging.error('软件已到期')
     #     return
+
     setup_excel_file("执行结果/异常名单.xlsx", ["身份证号", "异常原因"])
     setup_excel_file("执行结果/成功名单.xlsx", ["身份证号", "成功"])
 
+    # 2. 将配置传入数据获取和验证模块
     data_remaining, headers = 获取剩余数据()
     remaining_counts = len(data_remaining)
     logging.info("剩余操作数: %d", remaining_counts)
-    if len(remaining_counts) == 0:
+    if remaining_counts == 0:
         logging.info("程序已执行完成")
         return
     if "身份证号" not in headers:
         logging.critical("未找到身份证号列，请检查文档/名单.xlsx")
         return
 
+    # 3. 使用 yxmb_compatlib 的 CustomBrowser
     _driver = CustomBrowser(disable_image=False)
-    登录健康档案系统()
+    
+    # 4. 使用 yxmb_compatlib 的登录函数，它会利用加载的配置
+    login(_driver)
 
     try:
         for record in data_remaining:
-            result, _sfzh, date_data = validate_record(record, headers)
+            # 5. 将配置传递给验证器
+            result, _sfzh, date_data = validate_record(record, headers, config)
             if not result:
                 continue
 
-            patient_func(record, headers, date_data)
+            patient_func(_driver, record, headers, date_data)
 
     except Exception as e:
-        logging.error(e)
+        logging.error(e, exc_info=True) # 使用 exc_info=True 记录完整的堆栈跟踪
         raise
     else:
         logging.info("程序已执行完成")
-        _driver.quit()
-        # env_write('执行结果/env.txt', 10, '执行完成:1')
+    finally:
+        # 确保浏览器在任何情况下都能被关闭
+        if '_driver' in locals() and _driver:
+            _driver.quit()
 
 
 if __name__ == "__main__":
