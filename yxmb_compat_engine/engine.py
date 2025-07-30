@@ -17,7 +17,7 @@ def run(patient_func):
 
     # 2. 将配置传入数据获取和验证模块
     data_remaining, headers, initial_completed = 获取剩余数据()
-    
+
     # 创建 ResultWriter 实例
     writer = ResultWriter(
         success_path="执行结果/成功名单.xlsx",

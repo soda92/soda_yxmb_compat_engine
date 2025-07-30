@@ -3,23 +3,16 @@ from urllib.parse import urlparse
 from phis_config import ProgramConfigV2
 from .async_xhr import get_async_xhr
 import re
-from .result_writer import ResultWriter # 确保导入
-
-# 不再需要这些导入
-# from kapybara.common.envWrite import env_write
-# from kapybara.common.write_excel import excel_append
-# from .运行时数据 import 已完成数量
+from .result_writer import ResultWriter
 
 
 def get_root_url() -> str:
-# ... (此函数不变) ...
     url = ProgramConfigV2.get_url()
     parsed_url = urlparse(url)
     return f"{parsed_url.scheme}://{parsed_url.netloc}"
 
 
 def get_org_code(driver) -> str:
-# ... (此函数不变) ...
     org_code = re.findall("orgCode *: *'(.*)'", driver.page_source)
     for i in org_code:
         if len(i) == 4:

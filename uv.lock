@@ -244,7 +244,7 @@ name = "macholib"
 version = "1.16.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "altgraph", marker = "sys_platform == 'darwin'" },
+    { name = "altgraph" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/95/ee/af1a3842bdd5902ce133bd246eb7ffd4375c38642aeb5dc0ae3a0329dfa2/macholib-1.16.3.tar.gz", hash = "sha256:07ae9e15e8e4cd9a788013d81f5908b3609aa76f9b1421bae9c4d7606ec86a30", size = 59309, upload-time = "2023-09-25T09:10:16.155Z" }
 wheels = [
@@ -834,7 +834,7 @@ wheels = [
 
 [[package]]
 name = "soda-kapybara"
-version = "2025.7.28.0"
+version = "2025.7.30.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cryptography" },
@@ -846,10 +846,11 @@ dependencies = [
     { name = "pytest" },
     { name = "requests" },
     { name = "selenium" },
+    { name = "yxmb-compatlib" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/27/a4/8374ed8e9d4ae6262d14b4627b6c344ff70cebdf8f5efa8a0c7f5b102443/soda_kapybara-2025.7.28.0.tar.gz", hash = "sha256:cbc548d10f74de1f369fa486f176435f4141bd47376d8194b9eb0101d4b38e67", size = 19935, upload-time = "2025-07-28T06:23:55.995Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/50/4d/3e13bff41f75e54c9155457c469f0224ae766088659dd5f9ea3bb7a2411c/soda_kapybara-2025.7.30.1.tar.gz", hash = "sha256:21e7dfdbb745440f17aab9b4c508692d548b56a131dacd37922e560f70379dd8", size = 10175, upload-time = "2025-07-30T07:32:16.219Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d1/4e/dd50ef9ead0f182b42177d223e9636147510a60e7beec45cbbd1b615a16b/soda_kapybara-2025.7.28.0-py3-none-any.whl", hash = "sha256:041d11fd34e30d5ee349e47b0a3aaedd2080fc928e5676977dfb9f25ffcef990", size = 29326, upload-time = "2025-07-28T06:23:54.976Z" },
+    { url = "https://files.pythonhosted.org/packages/a5/23/18e8d3e31d797f6ea17ea851f5d3c92c571d712a10e1c39d9b1c56913d56/soda_kapybara-2025.7.30.1-py3-none-any.whl", hash = "sha256:5999f6f075f4251aaff135552b35583636151f7b3906720761068ae0ab0b024d", size = 12253, upload-time = "2025-07-30T07:32:15.013Z" },
 ]
 
 [[package]]
@@ -987,12 +988,12 @@ requires-dist = [
     { name = "phis-logging", specifier = ">=2025.7.29.3" },
     { name = "phis-login", specifier = ">=2025.7.29.1" },
     { name = "soda-kapybara", specifier = ">=2025.7.17.7" },
-    { name = "yxmb-compatlib", specifier = ">=2025.7.30.2" },
+    { name = "yxmb-compatlib", specifier = ">=2025.7.30.6" },
 ]
 
 [[package]]
 name = "yxmb-compatlib"
-version = "2025.7.30.2"
+version = "2025.7.30.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ddddocr" },
@@ -1001,7 +1002,7 @@ dependencies = [
     { name = "pyinstaller" },
     { name = "selenium" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/bf/c2/16fc1dcc14b10fc4dc66a0fdc7b88ad6bdee8a9b8bb9e9772b08be2125b2/yxmb_compatlib-2025.7.30.2.tar.gz", hash = "sha256:3baf7da48abdb747b6f0a1ef95ea4e4a18257162613db8d3beb2ad932cc49614", size = 9863, upload-time = "2025-07-30T04:37:21.515Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/9e/9a/26385723b272fd9b3c867fa0e8d48fcbaec7e824f653378eb0d0b5d113e0/yxmb_compatlib-2025.7.30.6.tar.gz", hash = "sha256:ce634b03505f7f683ede91e2b79430cc916b19d4cd65918abed634d5162a65ac", size = 17178, upload-time = "2025-07-30T08:04:58.335Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d9/a4/5ada2729086b0fd9216893d7c207cb7a18dff153a66906c2567cf2876d80/yxmb_compatlib-2025.7.30.2-py3-none-any.whl", hash = "sha256:d744ff58ea4119002c89fc641c7735a5164ab765edb28cb1f21d42ecba57bf1e", size = 16786, upload-time = "2025-07-30T04:37:20.566Z" },
+    { url = "https://files.pythonhosted.org/packages/ee/f3/c8a9ec4cea17509398a646420402b160afd1f89810ec775b6d7e96a5de71/yxmb_compatlib-2025.7.30.6-py3-none-any.whl", hash = "sha256:512d893ef7cd8c27eec8a00c23270feb05efcdb35c146bc89c8a933ccf54245a", size = 30594, upload-time = "2025-07-30T08:04:57.015Z" },
 ]

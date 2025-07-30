@@ -11,9 +11,6 @@ import logging
 from kapybara.common.envWrite import env_write
 from phis_config import ProgramConfigV2
 
-# 不再需要从这里导入已完成数量
-# from .运行时数据 import 已完成数量
-
 
 def 获取剩余数据() -> tuple:
     completed_count = int(ProgramConfigV2.get_completed_count())
