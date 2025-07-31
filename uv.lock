@@ -972,7 +972,7 @@ wheels = [
 
 [[package]]
 name = "yxmb-compat-engine"
-version = "2025.7.29.8"
+version = "2025.7.31.0"
 source = { editable = "." }
 dependencies = [
     { name = "phis-config" },
@@ -988,12 +988,12 @@ requires-dist = [
     { name = "phis-logging", specifier = ">=2025.7.29.3" },
     { name = "phis-login", specifier = ">=2025.7.29.1" },
     { name = "soda-kapybara", specifier = ">=2025.7.30.2" },
-    { name = "yxmb-compatlib", specifier = ">=2025.7.30.6" },
+    { name = "yxmb-compatlib", specifier = ">=2025.7.31.0" },
 ]
 
 [[package]]
 name = "yxmb-compatlib"
-version = "2025.7.30.6"
+version = "2025.7.31.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ddddocr" },
@@ -1002,7 +1002,7 @@ dependencies = [
     { name = "pyinstaller" },
     { name = "selenium" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/9e/9a/26385723b272fd9b3c867fa0e8d48fcbaec7e824f653378eb0d0b5d113e0/yxmb_compatlib-2025.7.30.6.tar.gz", hash = "sha256:ce634b03505f7f683ede91e2b79430cc916b19d4cd65918abed634d5162a65ac", size = 17178, upload-time = "2025-07-30T08:04:58.335Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/25/3b/77ffa61eb275a2c7c73bbec26d53e25cc628fd3d7fc6c322754f6259cd14/yxmb_compatlib-2025.7.31.0.tar.gz", hash = "sha256:9e54ed94025f9a5041abd0207d0ba6d432eb0c76f385ad5d596a82205db66eee", size = 18502, upload-time = "2025-07-31T01:33:42.087Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ee/f3/c8a9ec4cea17509398a646420402b160afd1f89810ec775b6d7e96a5de71/yxmb_compatlib-2025.7.30.6-py3-none-any.whl", hash = "sha256:512d893ef7cd8c27eec8a00c23270feb05efcdb35c146bc89c8a933ccf54245a", size = 30594, upload-time = "2025-07-30T08:04:57.015Z" },
+    { url = "https://files.pythonhosted.org/packages/9b/df/ebc2fa5b08cee6791c8ef62116ed1a6d7854ab5b451c17926132d3568021/yxmb_compatlib-2025.7.31.0-py3-none-any.whl", hash = "sha256:4ce1036b43ff81cfc72184cebac1971e54a785212721f8bd7e6f42a9032239cc", size = 32377, upload-time = "2025-07-31T01:33:40.915Z" },
 ]
