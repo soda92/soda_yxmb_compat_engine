@@ -1,6 +1,7 @@
 import logging
 # --- 替换为 yxmb_compatlib 的组件 ---
-from yxmb_compatlib import CustomBrowser, login
+from yxmb_compatlib import login
+from kapybara import CustomBrowser
 from yxmb_compatlib.config import load_config
 # --- 引擎自身的组件 ---
 from phis_logging import setup_logging
