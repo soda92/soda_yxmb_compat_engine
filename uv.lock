@@ -972,7 +972,7 @@ wheels = [
 
 [[package]]
 name = "yxmb-compat-engine"
-version = "2025.7.31.0"
+version = "2025.7.31.1"
 source = { editable = "." }
 dependencies = [
     { name = "phis-config" },
@@ -988,12 +988,12 @@ requires-dist = [
     { name = "phis-logging", specifier = ">=2025.7.29.3" },
     { name = "phis-login", specifier = ">=2025.7.29.1" },
     { name = "soda-kapybara", specifier = ">=2025.7.30.2" },
-    { name = "yxmb-compatlib", specifier = ">=2025.7.31.0" },
+    { name = "yxmb-compatlib", specifier = ">=2025.7.31.1" },
 ]
 
 [[package]]
 name = "yxmb-compatlib"
-version = "2025.7.31.0"
+version = "2025.7.31.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ddddocr" },
@@ -1002,7 +1002,7 @@ dependencies = [
     { name = "pyinstaller" },
     { name = "selenium" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/25/3b/77ffa61eb275a2c7c73bbec26d53e25cc628fd3d7fc6c322754f6259cd14/yxmb_compatlib-2025.7.31.0.tar.gz", hash = "sha256:9e54ed94025f9a5041abd0207d0ba6d432eb0c76f385ad5d596a82205db66eee", size = 18502, upload-time = "2025-07-31T01:33:42.087Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e6/9c/bb0399f348a932e9c79ff7cade820944d40e4aa6fd6e2d5f2bb39b5ae193/yxmb_compatlib-2025.7.31.1.tar.gz", hash = "sha256:f1a4d2f6a8611a5b2b17cafe8ac87ce23e0b467497fa4a4c372e0191e84981ae", size = 18552, upload-time = "2025-07-31T01:44:03.63Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/9b/df/ebc2fa5b08cee6791c8ef62116ed1a6d7854ab5b451c17926132d3568021/yxmb_compatlib-2025.7.31.0-py3-none-any.whl", hash = "sha256:4ce1036b43ff81cfc72184cebac1971e54a785212721f8bd7e6f42a9032239cc", size = 32377, upload-time = "2025-07-31T01:33:40.915Z" },
+    { url = "https://files.pythonhosted.org/packages/bc/ec/754b5f75120a6efb349f401cccd12bc8477c4710f3bcc8a410f103ecb1a1/yxmb_compatlib-2025.7.31.1-py3-none-any.whl", hash = "sha256:de94f59d962b8e2fff34acfeafa712480bde949c05b268d7b695104ef24396be", size = 32392, upload-time = "2025-07-31T01:44:02.442Z" },
 ]
