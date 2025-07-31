@@ -65,7 +65,6 @@ def run(patient_func, menu_id: str):
                 logging.error(f"处理病人 {sfzh} 时发生未知错误: {e}", exc_info=True)
                 writer.log_failure(sfzh, "未知错误 " + str(e))
 
-            logging.info(f'{sfzh}运行完成')
             _driver.close() # 关闭当前标签页或窗口
             # 切换回原始窗口
             _driver.switch_to.window(original_window)
