@@ -22,7 +22,7 @@ def get_org_code(driver) -> str:
 
 def 搜索并打开病人页面(driver: WebDriver, id_number: str, menuId: str, writer: ResultWriter):
     """
-    根据身份证号查询并打开个人首页
+    根据身份证号查询并打开指定页面
     """
     sfzh = str(id_number).replace("x", "X").strip()
     writer.log_current_person(sfzh) # 使用 writer 记录当前处理的人
@@ -38,8 +38,11 @@ def 搜索并打开病人页面(driver: WebDriver, id_number: str, menuId: str, 
             writer.log_failure(sfzh, "暂无建档")
             return
 
+    from yxmb_compatlib.config import load_config
+    config = load_config()
+    menu_id = config.get("menus", {}).get(menuId, menuId)
     target_url = (
-        f"{get_root_url()}/phis/app/ehr/index/{patient_id}?targetMenuId={menuId}"
+        f"{get_root_url()}/phis/app/ehr/index/{patient_id}?targetMenuId={menu_id}"
     )
     original_window = driver.current_window_handle
 

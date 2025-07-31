@@ -7,9 +7,9 @@ from phis_logging import setup_logging
 from .main_数据 import 获取剩余数据
 from .data_validator import validate_record
 from .result_writer import ResultWriter  # 导入新创建的类
+from .错误 import CustomException
 
-
-def run(patient_func):
+def run(patient_func, menu_id: str):
     setup_logging()
     writer = None  # 在 try 外部初始化
     _driver = None # 在 try 外部初始化
@@ -49,8 +49,26 @@ def run(patient_func):
             result, _sfzh, date_data = validate_record(record, headers, config, writer)
             if not result:
                 continue
+            sfzh = _sfzh.strip()
+            from .健康档案_页面 import 搜索并打开病人页面
+            original_window = 搜索并打开病人页面(_driver, sfzh, menu_id, writer)
+            if not original_window:
+                writer.log_failure(sfzh, "未找到该档案")
+                continue
+            try:
+                patient_func(_driver, record, headers, date_data, writer)
+            except CustomException as e:
+                logging.error(f"处理病人 {sfzh} 时发生错误: {e}", exc_info=True)
+                writer.log_failure(sfzh, str(e))
+            except Exception as e:
+                logging.error(f"处理病人 {sfzh} 时发生未知错误: {e}", exc_info=True)
+                writer.log_failure(sfzh, "未知错误 " + str(e))
 
-            patient_func(_driver, record, headers, date_data, writer)
+            logging.info(f'{sfzh}运行完成')
+            _driver.close() # 关闭当前标签页或窗口
+            # 切换回原始窗口
+            _driver.switch_to.window(original_window)
+
 
     except Exception as e:
         logging.error(e, exc_info=True) # 使用 exc_info=True 记录完整的堆栈跟踪

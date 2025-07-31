@@ -9,3 +9,7 @@ class RecordNotFound(Exception):
         self.message = message
         super().__init__(message)
         logging.error(message)
+
+
+class CustomException(Exception):
+    pass
