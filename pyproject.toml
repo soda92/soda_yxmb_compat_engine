@@ -5,13 +5,16 @@ description = "宇信慢病兼容版引擎"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "phis-logging>=2025.7.29.3",
-    "phis-login>=2025.7.29.1",
-    "phis-config>=2025.7.29.3",
-    "soda-kapybara>=2025.7.30.2",
-    "yxmb-compatlib>=2025.8.5.0",
+    "dask>=2025.7.0",
+    "ddddocr>=1.5.6",
+    "ocr-hooks>=2025.8.4.1",
+    "openpyxl>=3.1.5",
+    "pandas>=2.3.1",
+    "pydantic>=2.11.7",
+    "pyinstaller>=6.15.0",
+    "selenium>=4.34.2",
+    "tqdm>=4.67.1",
 ]
-
 
 [build-system]
 requires = ["hatchling"]
@@ -19,12 +22,34 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.sdist]
 ignore-vcs = true
-packages = ["yxmb_compat_engine"]
+packages = [
+    "yxmb_compat_engine",
+    "phis_login",
+    "phis_logging",
+    "phis_config",
+    "phis_build",
+    "phis_doctor_advice",
+    "phis_lifestyle_advice",
+    "phis_introducing_med",
+    "yxmb_compatlib",
+    "kapybara",
+]
 exclude = ["__pycache__", "*.pyc", "*.exe", "*.exe~", "*.syso"]
 
 [tool.hatch.build.targets.wheel]
 ignore-vcs = true
-packages = ["yxmb_compat_engine"]
+packages = [
+    "yxmb_compat_engine",
+    "phis_login",
+    "phis_logging",
+    "phis_config",
+    "phis_build",
+    "phis_doctor_advice",
+    "phis_lifestyle_advice",
+    "phis_introducing_med",
+    "yxmb_compatlib",
+    "kapybara",
+]
 exclude = ["__pycache__", "*.pyc", "*.exe~", "*.syso"]
 
 [tool.ruff.lint]
