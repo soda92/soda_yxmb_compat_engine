@@ -214,21 +214,16 @@ def main1(quaterly_statistics_only=False):
             driver.close()
             # 切换回原始窗口
             driver.switch_to.window(original_windows)
-            wait = WebDriverWait(driver, 10)  # 等待最长10秒
-            iframe_element = wait.until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="ext-gen1030"]'))
-            )
-            driver.switch_to.frame(iframe_element)
             continue
 
-        """
-        检查需要新建的随访日期
-        """
-        print('--------------------检查门诊日期--------------------')
-        mz_time, o_result = get门诊数据(driver, record, headers)
-        print('检查门诊日期', mz_time)
-
+        mz_time = []
         if not quaterly_statistics_only:
+            """
+            检查需要新建的随访日期
+            """
+            print('--------------------检查门诊日期--------------------')
+            mz_time, o_result = get门诊数据(driver, record, headers)
+            print('检查门诊日期', mz_time)
             if not mz_time and skip is True:
                 print('无符合条件的门诊日期')
                 excel_append(
@@ -260,11 +255,6 @@ def main1(quaterly_statistics_only=False):
         driver.close()
         # 切换回原始窗口
         driver.switch_to.window(original_windows)
-        wait = WebDriverWait(driver, 10)  # 等待最长10秒
-        iframe_element = wait.until(
-            EC.presence_of_element_located((By.XPATH, '//*[@id="ext-gen1030"]'))
-        )
-        driver.switch_to.frame(iframe_element)
 
     driver.quit()
     print('程序已执行完成')
