@@ -13,6 +13,10 @@ def run_full_build(no_zip: bool, no_copy: bool):
     :param no_copy: 如果为 True，则不执行最后的复制操作。
     """
     logging.info('开始完整构建流程...')
+    env_file_source = config.PROJECT_ROOT / '文档' / 'env.txt'
+    if not env_file_source.exists():
+        logging.error("cannot find env.txt")
+        exit(-1)
     build_steps.clean_temp_dir()
     config.RELEASE_DIR.mkdir(parents=True, exist_ok=True)
 
