@@ -4,7 +4,7 @@ from yxmb_compatlib.comment.check_element import check_element
 from yxmb_compatlib.comment.envWrite import env_write
 from yxmb_compatlib.comment.excle_create import check_and_create_excel
 from yxmb_compatlib.comment.write_excle import excel_append
-from kapybara import CustomBrowser, FormElement
+from kapybara import create_browser, FormElement
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from yxmb_compatlib.comment.登录头 import time, is_software_expired
@@ -89,7 +89,7 @@ def main1():
     sy_number = len(data)
     print('剩余操作数:', sy_number)
 
-    driver = CustomBrowser()
+    driver = create_browser()
     login(driver)
 
     iframe_element = WebDriverWait(driver, wait_time).until(
@@ -380,7 +380,7 @@ def main1():
         )
         driver.switch_to.frame(iframe_element)
 
-    driver.close()
+    driver.quit()
     print('程序已执行完成')
     env_write('执行结果/env.txt', 10, f'执行完成:1')
 
