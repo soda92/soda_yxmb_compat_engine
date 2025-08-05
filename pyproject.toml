@@ -65,3 +65,9 @@ ignore = [
 
 [tool.ruff.format]
 quote-style = "double"
+
+
+[project.scripts]
+phis_build = "phis_build.main:main"
+phis-build = "phis_build.main:main"
+new_follow_up = "yxmb_compat_engine.compat.compat_main:main"
