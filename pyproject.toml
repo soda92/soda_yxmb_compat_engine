@@ -66,6 +66,8 @@ ignore = [
 [tool.ruff.format]
 quote-style = "double"
 
+[project.entry-points."pyinstaller40"]
+hook-dirs = "yxmb_compatlib._pyinstaller:get_hook_dirs"
 
 [project.scripts]
 phis_build = "phis_build.main:main"
