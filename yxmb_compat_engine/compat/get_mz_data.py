@@ -14,6 +14,8 @@ def get_selected_mz_data(all_data, choice_dates):
     for date in choice_dates:
         for d, r in all_data:
             if d == date:
+                if '身高' not in r.keys():
+                    continue
                 r['随访日期:'] = d
                 r2.append(r)
                 break
@@ -59,10 +61,24 @@ def get门诊数据(
 
     require = False
     doctor = ''
+    require_in_excel = False
+    require_in_envtxt = True
     # 判断是否需要根据签约医生来获取门诊日期
     if '签约医生' in headers:
         doctor = record['签约医生'].strip()
         logging.info(f'需要根据签约医生{doctor}来获取门诊日期')
+        require_in_excel = True
+    from yxmb_compatlib.config import load_config
+    config = load_config()
+    if config['new_follow_up']['use_clinic_record_other_than_contracted_doctor'] is True:
+        require_in_envtxt = True
+    if require_in_excel and not require_in_envtxt:
+        logging.error("Excel表里有签约医生列，但env.txt里没有配置是否需要使用其他医生的门诊记录")
+        exit(-2)
+    if require_in_envtxt and not require_in_excel:
+        logging.error("env.txt里有配置是否需要使用其他医生的门诊记录，但Excel表里没有签约医生列")
+        exit(-3)
+    if require_in_excel and require_in_envtxt:
         require = True
     # 判断当前是否在门诊服务页面
     driver.switch_to.default_content()
