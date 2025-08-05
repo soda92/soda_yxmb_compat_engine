@@ -103,6 +103,9 @@ def main1(quaterly_statistics_only=False):
 
     # 输入身份证号
     for index, record in enumerate(data):
+        driver.switch_to.default_content()
+        iframe = FormElement('iframe', '//*[@id="ehrCenterPanel"]/iframe').element
+        driver.switch_to.frame(iframe)
         sfzh = record['身份证号']
         sfzh = str(sfzh).replace('x', 'X').strip()
         timeout_occurred = False  # 设置一个标志变量

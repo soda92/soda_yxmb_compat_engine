@@ -1,6 +1,6 @@
 [project]
 name = "yxmb-compat-engine"
-version = "2025.8.5.0"
+version = "2025.8.5.2"
 description = "宇信慢病兼容版引擎"
 readme = "README.md"
 requires-python = ">=3.12"
