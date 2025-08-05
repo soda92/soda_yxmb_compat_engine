@@ -73,11 +73,9 @@ def get门诊数据(
     if config['new_follow_up']['use_clinic_record_other_than_contracted_doctor'] is True:
         require_in_envtxt = True
     if require_in_excel and not require_in_envtxt:
-        logging.error("Excel表里有签约医生列，但env.txt里没有配置是否需要使用其他医生的门诊记录")
-        exit(-2)
-    if require_in_envtxt and not require_in_excel:
-        logging.error("env.txt里有配置是否需要使用其他医生的门诊记录，但Excel表里没有签约医生列")
-        exit(-3)
+        logging.warning("Excel表里有签约医生列，但env.txt配置了可以使用其他医生的门诊记录")
+    if not require_in_excel:
+        logging.info("Excel表里没有签约医生列, 忽略env.txt里的签约医生配置")
     if require_in_excel and require_in_envtxt:
         require = True
     # 判断当前是否在门诊服务页面
