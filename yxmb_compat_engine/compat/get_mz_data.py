@@ -8,19 +8,27 @@ from kapybara.hightlight_text import highlight_text
 from phis_config import Config, AdminConfig
 
 
+def check_place_name(name: str, place: str) -> bool:
+    place = place.replace("，", ",").split(",")
+    for p in place:
+        if p.strip() in name:
+            return True
+    return False
+
+
 def get_selected_mz_data(all_data, choice_dates):
-    logging.info(highlight_text('获取门诊数据'))
+    logging.info(highlight_text("获取门诊数据"))
     r2 = []
     for date in choice_dates:
         for d, r in all_data:
             if d == date:
-                if '身高' not in r.keys():
+                if "身高" not in r.keys():
                     continue
-                r['随访日期:'] = d
+                r["随访日期:"] = d
                 r2.append(r)
                 break
 
-    logging.info('获取门诊数据:%s', r2)
+    logging.info("获取门诊数据:%s", r2)
     return r2
 
 
@@ -52,51 +60,57 @@ def get门诊数据(
     """
     global Config, AdminConfig
     place = Config.机构名称
-    logging.info('需要判断的机构名称: %s', place)
+    logging.info("需要判断的机构名称: %s", place)
 
     start_date = AdminConfig.随访新建起始时间
     end_date = AdminConfig.随访新建结束时间
-    logging.info('随访新建起始时间: %s', start_date)
-    logging.info('随访新建结束时间: %s', end_date)
+    logging.info("随访新建起始时间: %s", start_date)
+    logging.info("随访新建结束时间: %s", end_date)
 
     require = False
-    doctor = ''
+    doctor = ""
     require_in_excel = False
     require_in_envtxt = True
     # 判断是否需要根据签约医生来获取门诊日期
-    if '签约医生' in headers:
-        doctor = record['签约医生'].strip()
-        logging.info(f'需要根据签约医生{doctor}来获取门诊日期')
+    if "签约医生" in headers:
+        doctor = record["签约医生"].strip()
+        logging.info(f"需要根据签约医生{doctor}来获取门诊日期")
         require_in_excel = True
     from yxmb_compatlib.config import load_config
+
     config = load_config()
-    if config['new_follow_up']['use_clinic_record_other_than_contracted_doctor'] is True:
+    if (
+        config["new_follow_up"]["use_clinic_record_other_than_contracted_doctor"]
+        is True
+    ):
         require_in_envtxt = True
     if require_in_excel and not require_in_envtxt:
-        logging.warning("Excel表里有签约医生列，但env.txt配置了可以使用其他医生的门诊记录")
+        logging.warning(
+            "Excel表里有签约医生列，但env.txt配置了可以使用其他医生的门诊记录"
+        )
     if not require_in_excel:
         logging.info("Excel表里没有签约医生列, 忽略env.txt里的签约医生配置")
     if require_in_excel and require_in_envtxt:
         require = True
     # 判断当前是否在门诊服务页面
     driver.switch_to.default_content()
-    form = driver.find_element(By.CSS_SELECTOR, 'iframe')
-    url = form.get_attribute('src')
-    if 'app/svc/clinic' not in url:
-        FormElement('门诊服务', 'menu_6').click()
+    form = driver.find_element(By.CSS_SELECTOR, "iframe")
+    url = form.get_attribute("src")
+    if "app/svc/clinic" not in url:
+        FormElement("门诊服务", "menu_6").click()
 
     # 切换到第一个 iframe
     driver.switch_to.default_content()
-    first_iframe = FormElement('iframe', '//*[@id="ext-gen21"]/iframe').element
+    first_iframe = FormElement("iframe", '//*[@id="ext-gen21"]/iframe').element
     driver.switch_to.frame(first_iframe)
 
-    FormElement('读取中', '//div[contains(text(),"读取中")]').wait_until_disappeared()
+    FormElement("读取中", '//div[contains(text(),"读取中")]').wait_until_disappeared()
     # 获取页脚值
-    page_number = FormElement('页脚', '//*[@id="ext-comp-1006"]').text
+    page_number = FormElement("页脚", '//*[@id="ext-comp-1006"]').text
 
     # 获取总页数
-    count_number = re.findall(r'\d+', page_number)
-    logging.info('门诊总页数: %s', count_number)
+    count_number = re.findall(r"\d+", page_number)
+    logging.info("门诊总页数: %s", count_number)
 
     data_list = []
     minimiumDateReached = False
@@ -111,59 +125,59 @@ def get门诊数据(
                 ec.presence_of_element_located(
                     (
                         By.XPATH,
-                        '/html/body/div[1]/div/div[1]/div/div[1]/div[2]/div/child::div',
+                        "/html/body/div[1]/div/div[1]/div/div[1]/div[2]/div/child::div",
                     )
                 )
             )
             div_elements = driver.find_elements(
                 By.XPATH,
-                '/html/body/div[1]/div/div[1]/div/div[1]/div[2]/div/child::div',
+                "/html/body/div[1]/div/div[1]/div/div[1]/div[2]/div/child::div",
             )
         except Exception as e:
             logging.info(e)
-            logging.info(f'没有门诊记录')
+            logging.info(f"没有门诊记录")
             return data_list, result
         for j in range(1, len(div_elements) + 1):
             # 获取门诊机构名称
             name = FormElement(
-                '门诊机构',
+                "门诊机构",
                 f'//*[@id="ext-gen22"]/div[{j}]/table/tbody/tr[1]/td[3]/div',
             ).text
 
             doctor_name = FormElement(
-                '医生姓名',
+                "医生姓名",
                 f'//*[@id="ext-gen22"]/div[{j}]/table/tbody/tr[1]/td[4]/div',
             ).text
 
-            if place in name:
+            if check_place_name(name, place):
                 # logging.info(f"当前选中的机构名称: {name}")
                 # 获取门诊日期
                 date_element = FormElement(
-                    '门诊日期',
+                    "门诊日期",
                     f'//*[@id="ext-gen22"]/div[{j}]/table/tbody/tr[1]/td[2]/div',
                 )
                 date = date_element.text
                 # logging.info(f"门诊日期: {date}")
-                date_object = datetime.strptime(date, '%Y-%m-%d')
-                if date_object < datetime.strptime(start_date, '%Y-%m-%d'):
+                date_object = datetime.strptime(date, "%Y-%m-%d")
+                if date_object < datetime.strptime(start_date, "%Y-%m-%d"):
                     minimiumDateReached = True
                     break
                 from selenium.webdriver import ActionChains
 
                 ActionChains(driver).double_click(date_element.element).perform()
                 needData_element = FormElement(
-                    '门诊数据详情',
+                    "门诊数据详情",
                     f'//*[@id="ext-gen22"]/div[{j}]/table/tbody/tr[2]/td/div',
                 )
                 needData = needData_element.text
 
                 # pattern = r'(身高|脉搏|舒张压|体温|收缩压|体重|空腹血糖):(\d+)'
-                pattern = r'(身高|脉搏|舒张压|体温|收缩压|体重|空腹血糖)[:：](\d+)'
+                pattern = r"(身高|脉搏|舒张压|体温|收缩压|体重|空腹血糖)[:：](\d+)"
                 matches = re.findall(pattern, needData)
                 my_dict = {}
                 for key, value in matches:
-                    if key == '脉搏':
-                        my_dict['心率'] = int(value)
+                    if key == "脉搏":
+                        my_dict["心率"] = int(value)
                     else:
                         my_dict[key] = int(value)
 
@@ -186,12 +200,12 @@ def get门诊数据(
 
         # 点击下一页按钮
         if i < int(count_number[0]) - 1:  # 如果不是最后一页，则继续翻页
-            FormElement('下一页', '//*[@id="ext-gen43"]').click()
+            FormElement("下一页", '//*[@id="ext-gen43"]').click()
 
             # class: .ext-el-mask
             FormElement(
-                '读取中', '//div[contains(text(),"读取中")]'
+                "读取中", '//div[contains(text(),"读取中")]'
             ).wait_until_disappeared()
 
-    FormElement('第一页', 'ext-gen32').click()
+    FormElement("第一页", "ext-gen32").click()
     return data_list, result
