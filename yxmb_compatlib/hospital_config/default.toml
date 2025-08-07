@@ -17,6 +17,7 @@ department_name = ""
 
 # 登录页面
 [login]
+pre_login_actions = []
 # 场景一：常见登录页
 username = ["id", "phisname"]
 password = ["id", "password"]

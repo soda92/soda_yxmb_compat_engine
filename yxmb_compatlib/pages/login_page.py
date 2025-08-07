@@ -107,6 +107,30 @@ class LoginPage:
         except TimeoutException:
             return False
 
+    def run_pre_login_actions(self):
+        """根据配置执行登录前的操作。"""
+        pre_login_actions = self.config.get('login', {}).get('pre_login_actions', [])
+
+        for action in pre_login_actions:
+            action_type = action.get('type')
+            description = action.get('description', '未知操作')
+            is_optional = action.get('optional', False)
+
+            print(f"执行登录前操作: {description} (类型: {action_type})")
+
+            try:
+                if action_type == 'handle_alert':
+                    self._handle_alert()
+                else:
+                    print(f"警告: 未知的登录前操作类型 '{action_type}'")
+
+            except Exception as e:
+                if is_optional:
+                    print(f"警告: 可选的登录前操作 '{description}' 失败。继续执行...")
+                else:
+                    print(f"错误: 执行登录前操作 '{description}' 失败。")
+                    raise e
+
     def login(self, url: str, username: str, password: str, department_name: str = None):
         """
         执行完整的登录流程，包含重试、验证码错误处理和成功验证。
@@ -117,9 +141,12 @@ class LoginPage:
                 logging.info(f"开始第 {attempt + 1}/{self.login_retries + 1} 次登录尝试...")
                 if attempt == 0:
                     self.driver.maximize_window()
-                
+
                 self.driver.get(url)
-                
+
+                # 执行登录前操作
+                self.run_pre_login_actions()
+
                 initial_url = self._sanitize_url(self.driver.current_url)
                 logging.info(f"初始URL: {initial_url}")
 
@@ -210,6 +237,9 @@ class LoginPage:
                     self.driver.maximize_window()
                 elif action_type == 'handle_alert':
                     self._handle_alert()
+                elif action_type == 'sleep':
+                    duration = action.get('duration', 1)
+                    time.sleep(duration)
                 elif action_type == 'click':
                     locator_data = action.get('locator')
                     if locator_data:
